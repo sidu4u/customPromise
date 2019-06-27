@@ -43,18 +43,20 @@ class MyPromise{
         let that = this;
 
         return MyPromise((resolve,reject) =>{
-            if(that.state === 'resolved')
-            {
-                // execute onresolve handler
-                resolve(onResolve(that.value));
-            }
-            else if(that.state === 'rejected')
-            {
-                //execute onreject handler
-                reject(onReject(that.value));
-            }
-            else{
-                this.chain.push({onResolve,onReject});
+            try {
+	            if (that.state === 'resolved') {
+		            // execute onresolve handler
+		            resolve(onResolve(that.value));
+	            }
+	            else if (that.state === 'rejected') {
+		            //execute onreject handler
+		            resolve(onReject(that.value));
+	            }
+	            else {
+		            this.chain.push({onResolve, onReject});
+	            }
+            }catch(e){
+                reject(e);
             }
         });
 
