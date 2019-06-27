@@ -40,16 +40,18 @@ class MyPromise{
 
     then(onResolve, onReject){
 
+        let that = this;
+
         return MyPromise((resolve,reject) =>{
-            if(this.state === 'resolved')
+            if(that.state === 'resolved')
             {
                 // execute onresolve handler
-                onResolve(this.value);
+                resolve(onResolve(that.value));
             }
-            else if(this.state === 'rejected')
+            else if(that.state === 'rejected')
             {
                 //execute onreject handler
-                onReject(this.value);
+                reject(onReject(that.value));
             }
             else{
                 this.chain.push({onResolve,onReject});
